@@ -1,0 +1,91 @@
+{
+  "projeto": {
+    "nome": "Monitoramento da qualidade da água da Represa de Guarapiranga",
+    "local": "Represa de Guarapiranga — São Paulo, SP",
+    "status": "Em desenvolvimento"
+  },
+
+  "indicadores": [
+    {
+      "id": "ph",
+      "nome": "pH",
+      "descricao": "Acidez ou alcalinidade",
+      "valor": "—",
+      "status": "• análise pendente",
+      "categoria": "fisico-quimicos",
+      "icone": "◌"
+    },
+    {
+      "id": "turbidez",
+      "nome": "Turbidez",
+      "descricao": "Transparência da água",
+      "valor": "— NTU",
+      "status": "• análise pendente",
+      "categoria": "fisico-quimicos",
+      "icone": "◌"
+    },
+    {
+      "id": "oxigenio",
+      "nome": "Oxigênio dissolvido",
+      "descricao": "Oxigênio disponível na água",
+      "valor": "— mg/L",
+      "status": "• análise pendente",
+      "categoria": "fisico-quimicos",
+      "icone": "◌"
+    },
+    {
+      "id": "temperatura",
+      "nome": "Temperatura",
+      "descricao": "Condição térmica da amostra",
+      "valor": "— °C",
+      "status": "• análise pendente",
+      "categoria": "fisico-quimicos",
+      "icone": "◌"
+    },
+    {
+      "id": "e-coli",
+      "nome": "E. coli",
+      "descricao": "Indicador de contaminação fecal",
+      "valor": "— NMP/100 mL",
+      "status": "• análise pendente",
+      "categoria": "microbiologicos",
+      "icone": "♧"
+    },
+    {
+      "id": "coliformes",
+      "nome": "Coliformes totais",
+      "descricao": "Indicador microbiológico",
+      "valor": "— NMP/100 mL",
+      "status": "• análise pendente",
+      "categoria": "microbiologicos",
+      "icone": "♧"
+    },
+    {
+      "id": "condutividade",
+      "nome": "Condutividade",
+      "descricao": "Presença de íons dissolvidos",
+      "valor": "— µS/cm",
+      "status": "• análise pendente",
+      "categoria": "fisico-quimicos",
+      "icone": "◌"
+    },
+    {
+      "id": "nitrato",
+      "nome": "Nitrato",
+      "descricao": "Nutriente dissolvido",
+      "valor": "— mg/L",
+      "status": "• análise pendente",
+      "categoria": "fisico-quimicos",
+      "icone": "◌"
+    },
+    {
+      "id": "fosfato",
+      "nome": "Fosfato",
+      "descricao": "Nutriente associado à eutrofização",
+      "valor": "— mg/L",
+      "status": "• análise pendente",
+      "categoria": "fisico-quimicos",
+      "icone": "◌"
+    }
+  ]
+}
