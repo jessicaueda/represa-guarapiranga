@@ -199,7 +199,7 @@ img {
       rgba(17, 91, 112, 0.50) 65%,
       rgba(24, 106, 129, 0.34) 100%
     ),
-    url("/images/represa_guarapiranga_1.png");
+    url("images/represa_guarapiranga_1.png");
 
   background-position: center;
   background-size: cover;
