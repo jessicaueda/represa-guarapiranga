@@ -336,6 +336,7 @@ h2 em {
   border-left: 0;
 }
 
+
 .highlight-lead strong {
   font-size: 11px;
   line-height: 1.5;
@@ -356,6 +357,22 @@ h2 em {
   margin-top: 3px;
   color: #708993;
   font-size: 8px;
+}
+
+.highlight-icon {
+  width: 42px;
+  height: 42px;
+  color: #4D9BB5;
+}
+
+.highlight-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* ============================================================
@@ -496,16 +513,45 @@ h2 em {
 .info-box {
   display: flex;
   align-items: center;
-  gap: 13px;
-  margin-top: 30px;
-  padding: 17px 19px;
-  background: #EAF3F5;
-  color: var(--ink);
+  gap: 20px;
+
+  background: #EAF3F6;
+
+  border: 1px solid #D2E4EA;
+
+  padding: 22px 28px;
+
+  min-height: 78px;
 }
 
 .info-icon {
-  color: #4E8FA6;
-  font-size: 19px;
+  width: 46px;
+  height: 46px;
+
+  flex: 0 0 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #D5EAF0;
+
+  border-radius: 50%;
+
+  color: #3F8FA8;
+}
+
+.info-icon svg {
+  width: 28px;
+  height: 28px;
+
+  fill: none;
+  stroke: currentColor;
+
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .info-box strong,
@@ -514,13 +560,14 @@ h2 em {
 }
 
 .info-box strong {
-  font-size: 10px;
+  font-size: 13px;
+  color: #0D3340;
 }
 
 .info-box small {
-  margin-top: 2px;
-  color: #71858D;
-  font-size: 8px;
+  margin-top: 5px;
+  color: #66808A;
+  font-size: 10px;
 }
 
 /* ============================================================
@@ -1353,3 +1400,4 @@ h2 em {
 .desktop-nav a:hover {
   color: #0D3340;
 }
+
