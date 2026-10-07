@@ -43,24 +43,6 @@
       "icone": "◌"
     },
     {
-      "id": "e-coli",
-      "nome": "E. coli",
-      "descricao": "Indicador de contaminação fecal",
-      "valor": "— NMP/100 mL",
-      "status": "• análise pendente",
-      "categoria": "microbiologicos",
-      "icone": "♧"
-    },
-    {
-      "id": "coliformes",
-      "nome": "Coliformes totais",
-      "descricao": "Indicador microbiológico",
-      "valor": "— NMP/100 mL",
-      "status": "• análise pendente",
-      "categoria": "microbiologicos",
-      "icone": "♧"
-    },
-    {
       "id": "condutividade",
       "nome": "Condutividade",
       "descricao": "Presença de íons dissolvidos",

@@ -326,44 +326,114 @@
         </div>
 
         <div class="method-grid">
+
+          <!-- 01 — COLETA -->
           <article class="method-card">
             <div class="method-top">
-              <span class="method-icon">⌖</span>
+
+              <span class="method-icon">
+                <svg viewBox="0 0 48 48" aria-hidden="true">
+                  <!-- marcador -->
+                  <path d="M24 6
+                          C17 6 12 11 12 18
+                          C12 27 24 40 24 40
+                          C24 40 36 27 36 18
+                          C36 11 31 6 24 6Z"/>
+
+                  <circle cx="24" cy="18" r="4"/>
+                </svg>
+              </span>
+
               <span class="method-number">01</span>
+
             </div>
+
             <h3>Planejamento e coleta</h3>
+
             <p>
               Definição dos pontos de amostragem, registro das
               condições locais e coleta em recipientes adequados.
             </p>
-            <span class="method-tag">• OBSERVAR</span>
+
+            <span class="method-tag">• COLETAR</span>
           </article>
 
+
+          <!-- 02 — ANÁLISES -->
           <article class="method-card">
             <div class="method-top">
-              <span class="method-icon">♧</span>
+
+              <span class="method-icon">
+                <svg viewBox="0 0 48 48" aria-hidden="true">
+
+                  <!-- frasco -->
+                  <path d="M19 6h10"/>
+                  <path d="M21 6v13L13 35
+                          C12 38 14 41 17 41
+                          H31
+                          C34 41 36 38 35 35
+                          L27 19V6"/>
+
+                  <!-- nível da água -->
+                  <path d="M16 31
+                          C19 29 21 29 24 31
+                          C27 33 29 33 32 31"/>
+
+                </svg>
+              </span>
+
               <span class="method-number">02</span>
+
             </div>
-            <h3>Análise das amostras</h3>
+
+            <h3>Análises físico-químicas</h3>
+
             <p>
-              Avaliação de parâmetros físico-químicos e
-              microbiológicos, conforme os recursos do laboratório.
+              Avaliação de parâmetros físico-químicos relacionados
+              à qualidade da água.
             </p>
-            <span class="method-tag">• INVESTIGAR</span>
+
+            <span class="method-parameters">
+              pH · temperatura · turbidez · condutividade · O₂
+            </span>
+
+            <span class="method-tag">• ANALISAR</span>
           </article>
 
+
+          <!-- 03 — INTERPRETAÇÃO -->
           <article class="method-card">
             <div class="method-top">
-              <span class="method-icon">▥</span>
+
+              <span class="method-icon">
+                <svg viewBox="0 0 48 48" aria-hidden="true">
+
+                  <!-- eixos -->
+                  <path d="M8 40V9"/>
+                  <path d="M8 40H42"/>
+
+                  <!-- barras -->
+                  <rect x="14" y="27" width="5" height="13"/>
+                  <rect x="23" y="20" width="5" height="20"/>
+                  <rect x="32" y="13" width="5" height="27"/>
+
+                </svg>
+              </span>
+
               <span class="method-number">03</span>
+
             </div>
+
             <h3>Interpretação dos dados</h3>
+
             <p>
               Organização dos resultados e comparação com
               referências compatíveis com a classe e o uso da água.
             </p>
+
             <span class="method-tag">• COMPREENDER</span>
           </article>
+
         </div>
 
         <div class="method-note">
@@ -379,10 +449,21 @@
     <section class="section section-dark results" id="resultados">
       <div class="container">
         <div class="results-header">
-          <div>
-            <div class="eyebrow">RESULTADOS</div>
-            <h2>O que a água tem<br>a nos <em>dizer?</em></h2>
-            <p>Acompanhe os indicadores que ajudam a compreender a qualidade da água.</p>
+          <div class="results-header">
+            <div>
+              <div class="eyebrow">RESULTADOS</div>
+
+              <h2>
+                O que a água tem<br>
+                a nos <em>dizer?</em>
+              </h2>
+            </div>
+
+            <p>
+              Acompanhe os indicadores que ajudam
+              a compreender a qualidade da água.
+            </p>
+
           </div>
 
           <div class="status-pill">
@@ -395,7 +476,6 @@
           <div class="tabs" role="tablist" aria-label="Categorias de indicadores">
             <button class="tab active" type="button" data-filter="todos">Todos os indicadores</button>
             <button class="tab" type="button" data-filter="fisico-quimicos">Físico-químicos</button>
-            <button class="tab" type="button" data-filter="microbiologicos">Microbiológicos</button>
           </div>
 
           <span class="data-status">⌁ Modelo de coleta</span>

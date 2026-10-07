@@ -640,9 +640,9 @@ h2 em {
 
 .section-heading {
   display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 50px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 80px;
 }
 
 .methodology h2 {
@@ -655,9 +655,16 @@ h2 em {
 }
 
 .section-heading > p {
-  max-width: 310px;
-  color: #89A1AA;
-  font-size: 10px;
+  position: relative;
+  top: 20px;
+
+  max-width: 300px;
+  padding-left: 18px;
+  border-left: 2px solid #76B8CC;
+
+  color: #B5D0D8;
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 .method-grid {
@@ -683,13 +690,33 @@ h2 em {
 }
 
 .method-icon {
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  border-radius: 5px;
-  background: #E3F0F4;
-  color: #5A98AD;
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #DCEBF0;
+  color: #3F8FA8;
+
+  border-radius: 7px;
+}
+
+.method-icon svg {
+  width: 28px;
+  height: 28px;
+
+  fill: none;
+  stroke: currentColor;
+
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.method-icon rect {
+  fill: none;
 }
 
 .method-number {
@@ -700,13 +727,14 @@ h2 em {
 
 .method-card h3 {
   margin-top: 23px;
-  font-size: 12px;
+  font-size: 14px;
+  color: #0D3340;
 }
 
 .method-card p {
   margin-top: 10px;
   color: #6D828A;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.75;
 }
 
@@ -714,7 +742,7 @@ h2 em {
   display: inline-block;
   margin-top: 20px;
   color: #4D8297;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: .08em;
 }
@@ -726,6 +754,20 @@ h2 em {
   font-size: 8px;
 }
 
+.method-parameters {
+  display: block;
+
+  margin-top: 14px;
+
+  color: #4D93AA;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1.6;
+  letter-spacing: 0.2px;
+}
+
 /* ============================================================
    09. RESULTADOS
    ============================================================ */
@@ -735,9 +777,9 @@ h2 em {
 
 .results-header {
   display: flex;
-  justify-content: space-between;
-  align-items: start;
-  gap: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 80px;
 }
 
 .results h2 {
@@ -745,10 +787,20 @@ h2 em {
   line-height: .98;
 }
 
-.results-header p {
-  margin-top: 13px;
-  color: #6D8994;
-  font-size: 10px;
+.results-header > p {
+  max-width: 300px;
+
+  padding-left: 18px;
+
+  border-left: 2px solid rgba(255, 255, 255, 0.55);
+
+  color: #D4E7EC;
+
+  font-size: 11px;
+  line-height: 1.6;
+
+  position: relative;
+  top: 1px;
 }
 
 .status-pill {
@@ -893,7 +945,7 @@ h2 em {
 }
 
 .transparency-box p {
-  font-size: 8px;
+  font-size: 11px;
 }
 
 /* ============================================================
