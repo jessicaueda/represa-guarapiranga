@@ -2,16 +2,15 @@
   "projeto": {
     "nome": "Monitoramento da qualidade da água da Represa de Guarapiranga",
     "local": "Represa de Guarapiranga — São Paulo, SP",
-    "status": "Em desenvolvimento"
+    "status": "Resultados parciais disponíveis"
   },
-
   "indicadores": [
     {
       "id": "ph",
       "nome": "pH",
-      "descricao": "Acidez ou alcalinidade",
-      "valor": "—",
-      "status": "• análise pendente",
+      "descricao": "Faixa observada nos pontos de coleta",
+      "valor": "7,66–8,60",
+      "status": "• valores registrados em 5 pontos",
       "categoria": "fisico-quimicos",
       "icone": "◌"
     },
@@ -19,7 +18,7 @@
       "id": "turbidez",
       "nome": "Turbidez",
       "descricao": "Transparência da água",
-      "valor": "— NTU",
+      "valor": "Aguardando análise",
       "status": "• análise pendente",
       "categoria": "fisico-quimicos",
       "icone": "◌"
@@ -28,7 +27,7 @@
       "id": "oxigenio",
       "nome": "Oxigênio dissolvido",
       "descricao": "Oxigênio disponível na água",
-      "valor": "— mg/L",
+      "valor": "Aguardando análise",
       "status": "• análise pendente",
       "categoria": "fisico-quimicos",
       "icone": "◌"
@@ -37,17 +36,17 @@
       "id": "temperatura",
       "nome": "Temperatura",
       "descricao": "Condição térmica da amostra",
-      "valor": "— °C",
-      "status": "• análise pendente",
+      "valor": "Aguardando medição",
+      "status": "• coleta pendente",
       "categoria": "fisico-quimicos",
       "icone": "◌"
     },
     {
       "id": "condutividade",
       "nome": "Condutividade",
-      "descricao": "Presença de íons dissolvidos",
-      "valor": "— µS/cm",
-      "status": "• análise pendente",
+      "descricao": "Faixa observada nos pontos de coleta",
+      "valor": "125,1–200,7 µS/cm",
+      "status": "• valores registrados em 5 pontos",
       "categoria": "fisico-quimicos",
       "icone": "◌"
     },
@@ -55,7 +54,7 @@
       "id": "nitrato",
       "nome": "Nitrato",
       "descricao": "Nutriente dissolvido",
-      "valor": "— mg/L",
+      "valor": "Aguardando análise",
       "status": "• análise pendente",
       "categoria": "fisico-quimicos",
       "icone": "◌"
@@ -64,10 +63,78 @@
       "id": "fosfato",
       "nome": "Fosfato",
       "descricao": "Nutriente associado à eutrofização",
-      "valor": "— mg/L",
+      "valor": "Aguardando análise",
       "status": "• análise pendente",
       "categoria": "fisico-quimicos",
       "icone": "◌"
     }
-  ]
+  ],
+  "pontos_coleta": [
+    {
+      "id": "ponto-1",
+      "nome": "Ponto 1",
+      "coordenadas": "23°41'45.5\"S 46°43'00.8\"W",
+      "latitude": -23.6959722,
+      "longitude": -46.7168889,
+      "cor": "Levemente esverdeado",
+      "odor": "Sem odor",
+      "residuos": "Não",
+      "temperatura_c": null,
+      "ph": 8.6,
+      "condutividade_us_cm": 160.1
+    },
+    {
+      "id": "ponto-2",
+      "nome": "Ponto 2",
+      "coordenadas": "23°41'46.4\"S 46°43'01.1\"W",
+      "latitude": -23.6962222,
+      "longitude": -46.7169722,
+      "cor": "Levemente esverdeado",
+      "odor": "Terroso",
+      "residuos": "Terra",
+      "temperatura_c": null,
+      "ph": 8.3,
+      "condutividade_us_cm": 146.9
+    },
+    {
+      "id": "ponto-3",
+      "nome": "Ponto 3",
+      "coordenadas": "23°41'47.1\"S 46°42'00.9\"W",
+      "latitude": -23.6964167,
+      "longitude": -46.70025,
+      "cor": "Levemente esverdeado",
+      "odor": "Sem odor",
+      "residuos": "Não",
+      "temperatura_c": null,
+      "ph": 8.12,
+      "condutividade_us_cm": 141.2
+    },
+    {
+      "id": "ponto-4",
+      "nome": "Ponto 4",
+      "coordenadas": "23°41'42.6\"S 46°42'59.0\"W",
+      "latitude": -23.6951667,
+      "longitude": -46.7163889,
+      "cor": "Esverdeado",
+      "odor": "Enxofre (esgoto)",
+      "residuos": "Plantas",
+      "temperatura_c": null,
+      "ph": 7.66,
+      "condutividade_us_cm": 200.7
+    },
+    {
+      "id": "ponto-5",
+      "nome": "Ponto 5",
+      "coordenadas": "23°41'47.8\"S 46°43'01.3\"W",
+      "latitude": -23.6966111,
+      "longitude": -46.7170278,
+      "cor": "Levemente esverdeado",
+      "odor": "Sem odor",
+      "residuos": "Não",
+      "temperatura_c": null,
+      "ph": 7.75,
+      "condutividade_us_cm": 125.1
+    }
+  ],
+  "observacao": "Resultados parciais; temperatura ainda não medida. Os dados observacionais são transcritos da planilha."
 }

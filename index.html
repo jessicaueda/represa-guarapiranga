@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Projeto acadêmico de monitoramento da qualidade da água da Represa de Guarapiranga.">
+  <meta name="description"
+    content="Projeto acadêmico de monitoramento da qualidade da água da Represa de Guarapiranga.">
   <title>Guarapiranga — Conhecer a água. Preservar o futuro.</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 </head>
 
 <body>
@@ -24,14 +30,21 @@
   ========================================================== -->
   <header class="site-header" id="inicio">
     <div class="container nav">
-      <a class="brand" href="#inicio" aria-label="Guarapiranga — início">
-        <span class="brand-mark">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 2.5C12 2.5 5 10.2 5 15.2C5 19.1 8.1 22 12 22C15.9 22 19 19.1 19 15.2C19 10.2 12 2.5 12 2.5Z"/>
-          </svg>
+
+      <a class="brand" href="#represa" aria-label="Guarapiranga — início">
+        <img src="images/logo_guarapiranga.png" alt="" class="brand-icon" aria-hidden="true">
+
+        <span class="brand-text">
+          <span class="brand-name">
+            guarapiranga<span class="brand-dot">.</span>
+          </span>
+
+          <span class="brand-tagline">
+            ÁGUA · AMBIENTE · CIÊNCIA
+          </span>
         </span>
-        <span>guarapiranga<span class="brand-dot">.</span></span>
       </a>
+
 
       <nav class="desktop-nav" aria-label="Navegação principal">
         <a href="#represa">A represa</a>
@@ -60,6 +73,8 @@
 
   <main id="conteudo">
 
+
+
     <!-- =========================================================
          HERO
     ========================================================== -->
@@ -79,61 +94,49 @@
           Represa de Guarapiranga e sua importância para todos nós.
         </p>
 
-        <div class="hero-actions">
-          <a class="button button-primary" href="#projeto">
-            Conheça o projeto <span>→</span>
-          </a>
-
-          <a class="text-link" href="#resultados">
-            <span class="play-icon">↳</span>
-            Ver resultados
-          </a>
-        </div>
-
         <div class="hero-meta">
-          <span>⌖ Represa de Guarapiranga — São Paulo, SP</span>
+
+          <div class="hero-location">
+            <span class="location-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" stroke="currentColor" stroke-width="1.6"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.6" />
+              </svg>
+            </span>
+
+            <span>Represa de Guarapiranga — São Paulo, SP</span>
+          </div>
           <span>
-            Imagem: 
-            <a
-              href="https://www.zonasulnoticias.com.br/prefeitura-concedera-parques-e-fara-ppp-para-revitalizar-orla-da-represa-de-guarapiranga-e-incentivar-o-turismo-ecologico-e-nautico/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            Imagem:
+            <a href="https://www.zonasulnoticias.com.br/prefeitura-concedera-parques-e-fara-ppp-para-revitalizar-orla-da-represa-de-guarapiranga-e-incentivar-o-turismo-ecologico-e-nautico/"
+              target="_blank" rel="noopener noreferrer">
               Zona Sul Notícias
             </a>
-        </span>
+          </span>
         </div>
       </div>
     </section>
 
-    <!-- =========================================================
-         HIGHLIGHTS
-    ========================================================== -->
     <section class="highlights">
       <div class="container highlights-grid">
         <div class="highlight highlight-lead">
           <div class="highlight-icon">
             <svg viewBox="0 0 48 48" aria-hidden="true">
 
-              <path
-                d="M24 5
+              <path d="M24 5
                   C24 5 11 18 11 28
                   C11 36 16.5 41 24 41
                   C31.5 41 37 36 37 28
-                  C37 18 24 5 24 5Z"
-              />
+                  C37 18 24 5 24 5Z" />
 
-              <path
-                d="M16 27
+              <path d="M16 27
                   C19 25 21 25 24 27
-                  C27 29 29 29 32 27"
-              />
+                  C27 29 29 29 32 27" />
 
-              <path
-                d="M16 32
+              <path d="M16 32
                   C19 30 21 30 24 32
-                  C27 34 29 34 32 32"
-              />
+                  C27 34 29 34 32 32" />
             </svg>
           </div>
           <strong>A água que nos abastece<br>merece a nossa atenção.</strong>
@@ -235,262 +238,327 @@
       </div>
     </section>
 
+
     <!-- =========================================================
-         A REPRESA
+         APRESENTAÇÃO DA REPRESA
     ========================================================== -->
-    <section class="section section-dark" id="represa">
-      <div class="container split-section">
-        <div class="image-card">
-          <div class="image-placeholder reservoir-image">
-            <span>Represa de Guarapiranga</span>
-          </div>
+    <section class="represa-intro" id="represa">
+      <div class="container">
+        <div class="represa-intro-grid">
 
-          <div class="image-caption">
-            <span class="caption-icon">⌖</span>
-            <div>
-              <strong>Água, natureza e cidade.</strong>
-              <small>Um equilíbrio que precisamos cuidar.</small>
+          <!-- Coluna esquerda: texto, link e caixa informativa -->
+          <div class="represa-intro-copy">
+            <div class="eyebrow">A REPRESA</div>
+            <h1>Muito mais que uma<br><em>reserva de água.</em></h1>
+
+            <p>
+              A Represa de Guarapiranga é um dos principais mananciais de abastecimento
+              de grande parte das zonas Sul e Sudoeste da Grande São Paulo. Suas águas
+              fazem parte do cotidiano de milhões de pessoas, abastecendo residências,
+              comércios e indústrias.
+            </p>
+
+            <p>
+              Além desse papel, a represa abriga biodiversidade e espaços de lazer,
+              sendo um importante ponto de contato entre a cidade e a natureza.
+            </p>
+
+            <a class="arrow-link" href="#metodologia">
+              Conheça a investigação <span>→</span>
+            </a>
+
+            <div class="info-box">
+              <div class="info-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48">
+                  <path d="M24 5 C24 5 12 18 12 28 C12 36 17 41 24 41 C31 41 36 36 36 28 C36 18 24 5 24 5Z" />
+                  <path d="M18 27 L22 31 L30 22" />
+                </svg>
+              </div>
+              <div class="info-box-copy">
+                <strong>Entender a qualidade da água é o primeiro passo</strong>
+                <small>para proteger esse patrimônio ambiental.</small>
+              </div>
             </div>
           </div>
 
-          <small class="image-credit">Imagem ilustrativa • Represa de Guarapiranga</small>
-        </div>
+          <!-- Coluna direita: fotografia e mapa -->
+          <div class="represa-visuals">
+            <figure class="represa-photo represa-photo-main">
+              <img src="images/represa_guarapiranga_2.jpg" alt="Vista aérea da Represa de Guarapiranga">
+              <figcaption class="represa-photo-credit">
+                Fotografia: Represa de Guarapiranga (divulgação: Sabesp).
+              </figcaption>
+            </figure>
 
-        <div class="section-copy">
-          <div class="eyebrow">A REPRESA</div>
-
-          <h2>Muito mais que uma<br><em>reserva de água.</em></h2>
-
-          <p>
-            A Represa de Guarapiranga é um dos principais mananciais
-            de abastecimento de grande parte das Zonas Sul e Sudoeste da Grande São Paulo.
-            Suas águas fazem parte da vida de milhões de pessoas.
-          </p>
-
-          <p>
-            Além do abastecimento, a represa abriga biodiversidade e
-            espaços de lazer, e sua condição ambiental depende de
-            diferentes fatores que precisam ser acompanhados.
-          </p>
-
-          <a class="arrow-link" href="#metodologia">
-            Como estamos investigando <span>→</span>
-          </a>
-
-          <div class="info-box">
-            <div class="info-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-
-                <!-- gota -->
-                <path d="
-                  M24 5
-                  C24 5 12 18 12 28
-                  C12 36 17 41 24 41
-                  C31 41 36 36 36 28
-                  C36 18 24 5 24 5Z
-                " />
-
-                <!-- check -->
-                <path d="
-                  M18 27
-                  L22 31
-                  L30 22
-                " />
-
-              </svg>
-            </div>
-            <div>
-              <strong>Entender a qualidade da água é o primeiro passo</strong>
-              <small>para proteger esse patrimônio ambiental.</small>
+            <div class="represa-visuals-side">
+              <div class="represa-map">
+                <iframe
+                  src="https://maps.google.com/maps?q=Represa%20de%20Guarapiranga%2C%20S%C3%A3o%20Paulo&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                  title="Mapa da Represa de Guarapiranga" loading="lazy" allowfullscreen>
+                </iframe>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- =========================================================
-         METODOLOGIA
-    ========================================================== -->
-    <section class="section methodology" id="metodologia">
-      <div class="container">
-        <div class="section-heading methodology-heading">
-          <div>
-            <div class="eyebrow">METODOLOGIA</div>
-            <h2>Da represa ao <em>laboratório.</em></h2>
-          </div>
+
+    <!-- ==================================================
+     METODOLOGIA
+================================================== -->
+
+    <!-- METODOLOGIA -->
+    <section class="methodology-band" id="metodologia">
+      <div class="container methodology-layout">
+
+        <div class="methodology-intro">
+          <span class="methodology-eyebrow">METODOLOGIA</span>
+
+          <h2>
+            Da represa<br>
+            ao <em>laboratório.</em>
+          </h2>
 
           <p>
             Um percurso de investigação para transformar
             amostras de água em conhecimento.
           </p>
+
+          <a class="methodology-link" href="#resultados">
+            Explore os resultados
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
 
-        <div class="method-grid">
+        <div class="methodology-steps">
 
-          <!-- 01 — COLETA -->
-          <article class="method-card">
-            <div class="method-top">
-
-              <span class="method-icon">
-                <svg viewBox="0 0 48 48" aria-hidden="true">
-                  <!-- marcador -->
-                  <path d="M24 6
-                          C17 6 12 11 12 18
-                          C12 27 24 40 24 40
-                          C24 40 36 27 36 18
-                          C36 11 31 6 24 6Z"/>
-
-                  <circle cx="24" cy="18" r="4"/>
-                </svg>
-              </span>
-
-              <span class="method-number">01</span>
-
-            </div>
-
+          <article class="method-step">
+            <div class="step-number">01</div>
             <h3>Planejamento e coleta</h3>
-
             <p>
-              Definição dos pontos de amostragem, registro das
-              condições locais e coleta em recipientes adequados.
+              Definição dos pontos de amostragem, registro
+              das condições locais e coleta em recipientes
+              adequados.
             </p>
-
-            <span class="method-tag">• COLETAR</span>
           </article>
 
-
-          <!-- 02 — ANÁLISES -->
-          <article class="method-card">
-            <div class="method-top">
-
-              <span class="method-icon">
-                <svg viewBox="0 0 48 48" aria-hidden="true">
-
-                  <!-- frasco -->
-                  <path d="M19 6h10"/>
-                  <path d="M21 6v13L13 35
-                          C12 38 14 41 17 41
-                          H31
-                          C34 41 36 38 35 35
-                          L27 19V6"/>
-
-                  <!-- nível da água -->
-                  <path d="M16 31
-                          C19 29 21 29 24 31
-                          C27 33 29 33 32 31"/>
-
-                </svg>
-              </span>
-
-              <span class="method-number">02</span>
-
-            </div>
-
+          <article class="method-step">
+            <div class="step-number">02</div>
             <h3>Análises físico-químicas</h3>
-
             <p>
-              Avaliação de parâmetros físico-químicos relacionados
-              à qualidade da água.
+              Medição dos parâmetros relacionados à
+              qualidade da água em laboratório.
             </p>
-
-            <span class="method-parameters">
-              pH · temperatura · turbidez · condutividade · O₂
-            </span>
-
-            <span class="method-tag">• ANALISAR</span>
           </article>
 
-
-          <!-- 03 — INTERPRETAÇÃO -->
-          <article class="method-card">
-            <div class="method-top">
-
-              <span class="method-icon">
-                <svg viewBox="0 0 48 48" aria-hidden="true">
-
-                  <!-- eixos -->
-                  <path d="M8 40V9"/>
-                  <path d="M8 40H42"/>
-
-                  <!-- barras -->
-                  <rect x="14" y="27" width="5" height="13"/>
-                  <rect x="23" y="20" width="5" height="20"/>
-                  <rect x="32" y="13" width="5" height="27"/>
-
-                </svg>
-              </span>
-
-              <span class="method-number">03</span>
-
-            </div>
-
+          <article class="method-step">
+            <div class="step-number">03</div>
             <h3>Interpretação dos dados</h3>
-
             <p>
-              Organização dos resultados e comparação com
-              referências compatíveis com a classe e o uso da água.
+              Organização dos resultados e comparação
+              com referências compatíveis com a classe
+              e o uso da água.
             </p>
-
-            <span class="method-tag">• COMPREENDER</span>
           </article>
 
-        </div>
-
-        <div class="method-note">
-          ▣ &nbsp; Metodologia proposta. Os pontos de coleta, equipamentos e protocolos
-          serão documentados pela equipe.
         </div>
       </div>
     </section>
+    <!-- =========================================================
+         PARÂMETROS INVESTIGADOS
+    ========================================================== -->
+    <section class="water-parameters" id="parametros" aria-labelledby="parameters-title">
+      <div class="container parameters-layout">
+        <div class="parameters-intro">
+          <div class="eyebrow">O QUE INVESTIGAMOS</div>
+          <h2 id="parameters-title">Parâmetros <em>de qualidade da água.</em></h2>
+          <p>Observe os indicadores e selecione cada um para entender por que ele é importante na avaliação ambiental da
+            represa.</p>
+          <p class="parameters-hint"><span aria-hidden="true">↗</span> Passe o mouse ou clique em um parâmetro.</p>
+        </div>
+
+        <div class="parameter-grid">
+          <button class="parameter-card" type="button" aria-expanded="false">
+            <span class="parameter-symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 8h10a2 2 0 1 0-2-2M3 12h15a2 2 0 1 1-2 2M3 16h8a2 2 0 1 0-2 2" stroke="currentColor"
+                  stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span class="parameter-name">Odor</span>
+            <span class="parameter-summary">Perceba alterações no cheiro da água.</span>
+            <span class="parameter-detail">Alterações no cheiro podem indicar decomposição de matéria orgânica,
+              proliferação de algas ou presença de substâncias indesejadas.</span>
+          </button>
+
+
+          <button class="parameter-card" type="button" aria-expanded="false">
+            <span class="parameter-symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3C10 6.5 6 10.5 6 14a6 6 0 0 0 12 0c0-3.5-4-7.5-6-11Z" stroke="currentColor"
+                  stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span class="parameter-name">Cor</span>
+            <span class="parameter-summary">Observe mudanças na aparência.</span>
+            <span class="parameter-detail">Mudanças na coloração podem estar relacionadas a partículas em suspensão,
+              matéria orgânica dissolvida ou alterações nas condições do manancial.</span>
+          </button>
+
+
+          <button class="parameter-card" type="button" aria-expanded="false">
+            <span class="parameter-symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 7h18M3 17h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                <circle cx="7" cy="11" r="1.5" stroke="currentColor" stroke-width="1.5" />
+                <circle cx="14" cy="13" r="1" fill="currentColor" />
+                <circle cx="18" cy="10" r="1.5" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            </span>
+            <span class="parameter-name">Resíduos</span>
+            <span class="parameter-summary">Identifique lixo e materiais descartados.</span>
+            <span class="parameter-detail">A presença de lixo e outros materiais revela possíveis fontes de poluição e
+              ajuda a identificar impactos das atividades humanas no entorno.</span>
+          </button>
+
+
+          <button class="parameter-card" type="button" aria-expanded="false">
+            <span class="parameter-symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 14.5V5a3 3 0 0 1 6 0v9.5a5 5 0 1 1-6 0Z" stroke="currentColor" stroke-width="1.7"
+                  stroke-linejoin="round" />
+                <path d="M12 8v8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="parameter-name">Temperatura</span>
+            <span class="parameter-summary">Acompanhe as condições térmicas da água.</span>
+            <span class="parameter-detail">A temperatura influencia a quantidade de oxigênio que pode ficar dissolvida
+              na água e afeta os processos biológicos dos organismos aquáticos.</span>
+          </button>
+
+
+          <button class="parameter-card" type="button" aria-expanded="false">
+            <span class="parameter-symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 3h6M10 3v6l-5 10a1 1 0 0 0 1 2h12a1 1 0 0 0 1-2L14 9V3" stroke="currentColor"
+                  stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M8 15h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+              </svg>
+            </span>
+
+            <span class="parameter-name">pH</span>
+            <span class="parameter-summary">Indica acidez ou basicidade.</span>
+            <span class="parameter-detail">Indica se a água está mais ácida ou mais básica. Valores fora da faixa
+              esperada podem afetar organismos e processos químicos aquáticos.</span>
+          </button>
+          <button class="parameter-card" type="button" aria-expanded="false">
+
+            <span class="parameter-symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.5 2.5L5.8 13h5.7l-1 8.5L18.2 10h-5.7l1-7.5Z" stroke="currentColor" stroke-width="1.7"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span class="parameter-name">Condutividade</span>
+            <span class="parameter-summary">Relacionada aos íons dissolvidos.</span>
+            <span class="parameter-detail">Indica a capacidade da água de conduzir corrente elétrica, relacionada à
+              quantidade de íons dissolvidos; variações podem sinalizar mudanças na composição da água.</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
 
     <!-- =========================================================
          RESULTADOS
     ========================================================== -->
     <section class="section section-dark results" id="resultados">
       <div class="container">
-        <div class="results-header">
-          <div class="results-header">
+        <section class="sampling-results sampling-results--standalone" aria-labelledby="sampling-title">
+          <div class="sampling-heading">
             <div>
-              <div class="eyebrow">RESULTADOS</div>
-
-              <h2>
-                O que a água tem<br>
-                a nos <em>dizer?</em>
-              </h2>
+              <div class="eyebrow">PONTOS DE COLETA</div>
+              <h2 id="sampling-title">Resultados <em>por localização.</em></h2>
+              <p>Selecione um ponto no mapa ou na lista para consultar os dados registrados.</p>
             </div>
-
-            <p>
-              Acompanhe os indicadores que ajudam
-              a compreender a qualidade da água.
-            </p>
-
           </div>
-
-          <div class="status-pill">
-            <span></span>
-            Aguardando análises
+          <div class="sampling-layout sampling-layout--three">
+            <nav class="sampling-point-list" id="samplingPointList" aria-label="Lista de pontos de coleta"></nav>
+            <div id="samplingMap" class="sampling-map" role="application" aria-label="Mapa interativo dos pontos de coleta"></div>
+            <aside class="sampling-side">
+              <label for="samplingPointSelect">Ponto de coleta</label>
+              <select id="samplingPointSelect" class="sampling-select">
+                <option value="">Selecione um ponto</option>
+              </select>
+              <div id="samplingPointDetails" class="sampling-point-details" aria-live="polite">
+                <p>Selecione um ponto para visualizar os resultados.</p>
+              </div>
+            </aside>
           </div>
-        </div>
-
-        <div class="results-toolbar">
-          <div class="tabs" role="tablist" aria-label="Categorias de indicadores">
-            <button class="tab active" type="button" data-filter="todos">Todos os indicadores</button>
-            <button class="tab" type="button" data-filter="fisico-quimicos">Físico-químicos</button>
+          <div class="comparison-grid">
+            <article class="comparison-card">
+              <div class="comparison-card-heading">
+                <h3>pH</h3>
+                <span>sem unidade</span>
+              </div>
+              <div id="phChart" class="simple-chart" aria-label="Gráfico de pH por ponto"></div>
+            </article>
+            <article class="comparison-card">
+              <div class="comparison-card-heading">
+                <h3>Condutividade elétrica (µS/cm)</h3>
+                <span>µS/cm</span>
+              </div>
+              <div id="conductivityChart" class="simple-chart" aria-label="Gráfico de condutividade elétrica por ponto"></div>
+            </article>
           </div>
+          <p class="sampling-note">Os gráficos mostram os valores registrados nos pontos de coleta. A temperatura ainda aguarda medição. A visualização não representa, por si só, uma classificação da qualidade ou potabilidade da água.</p>
+        </section>
 
-          <span class="data-status">⌁ Modelo de coleta</span>
-        </div>
-
-        <div class="indicator-grid" id="indicatorGrid">
-          <!-- Cards inseridos pelo JavaScript a partir do data.json -->
-        </div>
+        <section class="sampling-results" aria-labelledby="sampling-title">
+          <div class="sampling-heading">
+            <div>
+              <div class="eyebrow">PONTOS DE COLETA</div>
+              <h3 id="sampling-title">Resultados <em>por localização.</em></h3>
+              <p>Selecione um marcador no mapa ou um ponto na lista para consultar os dados registrados.</p>
+            </div>
+          </div>
+          <div class="sampling-layout">
+            <div id="samplingMap" class="sampling-map" role="application" aria-label="Mapa interativo dos pontos de coleta"></div>
+            <div class="sampling-side">
+              <label for="samplingPointSelect">Ponto de coleta</label>
+              <select id="samplingPointSelect" class="sampling-select">
+                <option value="">Selecione um ponto</option>
+              </select>
+              <div id="samplingPointDetails" class="sampling-point-details" aria-live="polite">
+                <p>Selecione um ponto para visualizar os resultados.</p>
+              </div>
+            </div>
+          </div>
+          <div class="comparison-grid">
+            <article class="comparison-card">
+              <div class="comparison-card-heading">
+                <h4>pH por ponto</h4>
+                <span>sem unidade</span>
+              </div>
+              <div id="phChart" class="simple-chart" aria-label="Gráfico de pH por ponto"></div>
+            </article>
+            <article class="comparison-card">
+              <div class="comparison-card-heading">
+                <h4>Condutividade elétrica</h4>
+                <span>µS/cm</span>
+              </div>
+              <div id="conductivityChart" class="simple-chart" aria-label="Gráfico de condutividade elétrica por ponto"></div>
+            </article>
+          </div>
+          <p class="sampling-note">Os gráficos mostram os valores registrados na planilha. A temperatura ainda aguarda medição. A visualização não representa, por si só, uma classificação da qualidade ou potabilidade da água.</p>
+        </section>
 
         <div class="transparency-box">
           <span>ⓘ</span>
           <p>
-            Transparência faz parte da ciência. Os dados serão publicados após as análises.
-            Nenhum valor apresentado nesta página representa uma medição realizada,
-            e não há conclusão sobre a qualidade ou potabilidade da água.
+Transparência faz parte da ciência. Os valores de pH e condutividade exibidos correspondem aos registros da coleta; os parâmetros ainda não analisados aparecem como pendentes. Estes dados, isoladamente, não determinam a potabilidade da água.
           </p>
         </div>
       </div>
@@ -557,7 +625,11 @@
   <footer class="site-footer">
     <div class="container footer-top">
       <a class="brand footer-brand" href="#inicio">
-        <span class="brand-mark">◌</span>
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2.5C12 2.5 5 10.2 5 15.2C5 19.1 8.1 22 12 22C15.9 22 19 19.1 19 15.2C19 10.2 12 2.5 12 2.5Z" />
+          </svg>
+        </span>
         <span>guarapiranga<span class="brand-dot">.</span></span>
       </a>
 
@@ -572,6 +644,9 @@
     </div>
   </footer>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="script.js"></script>
 </body>
+
 </html>
