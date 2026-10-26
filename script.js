@@ -4,10 +4,7 @@
 
 const state = {
   indicators: [],
-  points: [],
-  filter: "todos",
-  map: null,
-  markers: {}
+  filter: "todos"
 };
 
 /* ============================================================
@@ -16,7 +13,7 @@ const state = {
 const menuButton = document.querySelector(".menu-button");
 const mobileMenu = document.querySelector(".mobile-menu");
 
-if (menuButton && mobileMenu) {
+if (menuButton) {
   menuButton.addEventListener("click", () => {
     const isOpen = mobileMenu.classList.toggle("open");
     menuButton.setAttribute("aria-expanded", String(isOpen));
@@ -25,8 +22,8 @@ if (menuButton && mobileMenu) {
 
 document.querySelectorAll(".mobile-menu a").forEach(link => {
   link.addEventListener("click", () => {
-    if (mobileMenu) mobileMenu.classList.remove("open");
-    if (menuButton) menuButton.setAttribute("aria-expanded", "false");
+    mobileMenu.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
   });
 });
 
@@ -166,7 +163,6 @@ if (referencesToggle) {
     const expanded = referencesToggle.getAttribute("aria-expanded") === "true";
 
     referencesToggle.setAttribute("aria-expanded", String(!expanded));
-    if (!referencesContent) return;
     referencesContent.style.maxHeight = expanded
       ? "0px"
       : `${referencesContent.scrollHeight}px`;
@@ -188,14 +184,11 @@ async function loadIndicators() {
 
     const data = await response.json();
     state.indicators = data.indicadores || [];
-    state.points = data.pontos_coleta || [];
 
     renderIndicators();
-    renderSamplingPoints();
   } catch (error) {
     console.error(error);
 
-    if (!grid) return;
     grid.innerHTML = `
       <div class="indicator-card" style="grid-column: 1 / -1;">
         <strong style="color:#c8d68d;">Dados ainda não carregados.</strong>
@@ -213,7 +206,6 @@ async function loadIndicators() {
    ============================================================ */
 function renderIndicators() {
   const grid = document.querySelector("#indicatorGrid");
-  if (!grid) return;
 
   const filtered =
     state.filter === "todos"
@@ -242,146 +234,8 @@ function renderIndicators() {
 
 
 
-
 /* ============================================================
-   05. PONTOS DE COLETA, MAPA E GRÁFICOS
-   ============================================================ */
-function formatNumber(value, digits = 2) {
-  if (value === null || value === undefined || value === "") return "Aguardando medição";
-  return Number(value).toLocaleString("pt-BR", {
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits
-  });
-}
-
-function renderSamplingPoints() {
-  const select = document.querySelector("#samplingPointSelect");
-  const details = document.querySelector("#samplingPointDetails");
-  if (!select || !details) return;
-
-  if (!state.points.length) {
-    details.innerHTML = "<p>Os pontos de coleta ainda não foram carregados.</p>";
-    return;
-  }
-
-  select.innerHTML = '<option value="">Selecione um ponto</option>' +
-    state.points.map(point => `<option value="${point.id}">${point.nome}</option>`).join("");
-
-  const pointList = document.querySelector("#samplingPointList");
-  if (pointList) {
-    pointList.innerHTML = state.points.map((point, index) => `
-      <button class="sampling-point-option${index === 0 ? " active" : ""}" type="button" data-point="${point.id}" aria-pressed="${index === 0 ? "true" : "false"}">
-        <span class="point-number">0${index + 1}</span>
-        <span><span class="point-list-name">${point.nome}</span><span class="point-list-subtitle">${point.cor || "Ponto de coleta"}</span></span>
-      </button>`).join("");
-    pointList.querySelectorAll("[data-point]").forEach(button => {
-      button.addEventListener("click", () => showPoint(button.dataset.point, true));
-    });
-  }
-
-  select.addEventListener("change", () => {
-    if (select.value) showPoint(select.value, false);
-  });
-
-  renderSamplingMap();
-  renderSimpleChart("phChart", "ph", "", 2);
-  renderSimpleChart("conductivityChart", "condutividade_us_cm", " µS/cm", 1);
-  showPoint(state.points[0].id, false);
-}
-
-function renderSamplingMap() {
-  const mapElement = document.querySelector("#samplingMap");
-  if (!mapElement || !window.L || !state.points.length) {
-    if (mapElement) mapElement.innerHTML = '<p class="map-fallback">O mapa precisa de conexão com a internet para carregar. Use a lista ao lado para consultar os resultados.</p>';
-    return;
-  }
-
-  if (state.map) {
-    state.map.remove();
-    state.map = null;
-  }
-
-  const coordinates = state.points.map(point => [point.latitude, point.longitude]);
-  state.map = L.map(mapElement).setView(coordinates[0], 16);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: '&copy; OpenStreetMap contributors',
-    maxZoom: 19
-  }).addTo(state.map);
-
-  state.points.forEach((point, index) => {
-    const marker = L.marker([point.latitude, point.longitude]).addTo(state.map);
-    marker.bindPopup(`<strong>${point.nome}</strong><br>pH: ${formatNumber(point.ph)}<br>Condutividade: ${formatNumber(point.condutividade_us_cm, 1)} µS/cm`);
-    marker.on("click", () => showPoint(point.id, true));
-    state.markers[point.id] = marker;
-  });
-
-  if (coordinates.length > 1) {
-    state.map.fitBounds(coordinates, { padding: [24, 24] });
-  }
-}
-
-function showPoint(pointId, syncSelect = true) {
-  const point = state.points.find(item => item.id === pointId);
-  const details = document.querySelector("#samplingPointDetails");
-  const select = document.querySelector("#samplingPointSelect");
-  if (!point || !details) return;
-
-  if (syncSelect && select) select.value = point.id;
-  document.querySelectorAll(".sampling-point-option").forEach(button => {
-    const active = button.dataset.point === point.id;
-    button.classList.toggle("active", active);
-    button.setAttribute("aria-pressed", String(active));
-  });
-  details.innerHTML = `
-    <div class="point-detail-heading">
-      <span class="point-label">PONTO DE AMOSTRAGEM</span>
-      <h4>${point.nome}</h4>
-    </div>
-    <dl class="point-data-list">
-      <div><dt>pH</dt><dd>${formatNumber(point.ph)}</dd></div>
-      <div><dt>Condutividade elétrica</dt><dd>${formatNumber(point.condutividade_us_cm, 1)} <small>µS/cm</small></dd></div>
-      <div><dt>Temperatura</dt><dd>${point.temperatura_c == null ? "Aguardando medição" : `${formatNumber(point.temperatura_c, 1)} °C`}</dd></div>
-      <div><dt>Cor da água</dt><dd>${point.cor}</dd></div>
-      <div><dt>Odor</dt><dd>${point.odor}</dd></div>
-      <div><dt>Resíduos observados</dt><dd>${point.residuos}</dd></div>
-    </dl>
-    <p class="point-coordinates"><strong>Coordenadas:</strong> ${point.coordenadas}</p>
-    <a class="point-map-link" href="https://www.google.com/maps?q=${point.latitude},${point.longitude}" target="_blank" rel="noopener noreferrer">Abrir localização no Google Maps ↗</a>
-  `;
-  if (state.markers[point.id]) state.markers[point.id].openPopup();
-}
-
-function renderSimpleChart(containerId, key, suffix, digits) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  const valid = state.points.filter(point => Number.isFinite(Number(point[key])));
-  if (!valid.length) {
-    container.innerHTML = "<p>Dados ainda não disponíveis.</p>";
-    return;
-  }
-  const max = Math.max(...valid.map(point => Number(point[key])));
-  const min = Math.min(...valid.map(point => Number(point[key])));
-  const range = max - min || 1;
-  container.innerHTML = valid.map(point => {
-    const value = Number(point[key]);
-    const width = 18 + ((value - min) / range) * 72;
-    return `
-      <button class="chart-row" type="button" data-point="${point.id}" title="Ver ${point.nome}">
-        <span class="chart-label">${point.nome.replace("Ponto ", "P")}</span>
-        <span class="chart-track"><span class="chart-bar" style="width:${width}%"></span></span>
-        <strong class="chart-value">${formatNumber(value, digits)}${suffix}</strong>
-      </button>`;
-  }).join("");
-  container.querySelectorAll(".chart-row").forEach(button => {
-    button.addEventListener("click", () => {
-      showPoint(button.dataset.point, true);
-      document.getElementById("samplingPointDetails")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    });
-  });
-}
-
-/* ============================================================
-   06. FILTROS DOS RESULTADOS
+   05. FILTROS DOS RESULTADOS
    ============================================================ */
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
@@ -417,3 +271,118 @@ document.querySelectorAll(".parameter-card").forEach((card) => {
     card.setAttribute("aria-expanded", String(!wasOpen));
   });
 });
+
+
+/* ============================================================
+   07. RESULTADOS POR PONTO — mapa, seleção e gráficos
+   ============================================================ */
+async function initSamplingResults() {
+  const mapElement = document.getElementById('samplingMap');
+  const select = document.getElementById('samplingPointSelect');
+  const details = document.getElementById('samplingPointDetails');
+  const phChart = document.getElementById('phChart');
+  const conductivityChart = document.getElementById('conductivityChart');
+  if (!mapElement || !select || !details) return;
+
+  let map;
+  let markers = {};
+  let points = [];
+
+  function showDetails(point) {
+    if (!point) {
+      details.innerHTML = '<p>Selecione um ponto para visualizar os resultados.</p>';
+      return;
+    }
+    details.innerHTML = `
+      <div class="point-detail-heading"><span class="point-label">PONTO DE AMOSTRAGEM</span><h4>${point.nome}</h4></div>
+      <dl class="point-data-list">
+        <div><dt>pH</dt><dd>${Number(point.ph).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</dd></div>
+        <div><dt>Condutividade elétrica</dt><dd>${Number(point.condutividade_us_cm).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})} <small>µS/cm</small></dd></div>
+        <div><dt>Temperatura</dt><dd>${point.temperatura_c == null ? 'Aguardando medição' : `${point.temperatura_c} °C`}</dd></div>
+        <div><dt>Cor da água</dt><dd>${point.cor || 'Não registrado'}</dd></div>
+        <div><dt>Odor</dt><dd>${point.odor || 'Não registrado'}</dd></div>
+        <div><dt>Resíduos observados</dt><dd>${point.residuos || 'Não registrado'}</dd></div>
+      </dl>
+      <p class="point-coordinates"><strong>Coordenadas:</strong> ${point.coordenadas || `${point.latitude}, ${point.longitude}`}</p>
+      <a class="point-map-link" href="https://www.google.com/maps?q=${point.latitude},${point.longitude}" target="_blank" rel="noopener noreferrer">Abrir localização no Google Maps ↗</a>`;
+    select.value = point.id;
+    Object.entries(markers).forEach(([id, marker]) => {
+      if (id === point.id) marker.openPopup();
+    });
+  }
+
+  function renderChart(target, key, suffix, decimals) {
+    if (!target) return;
+    const values = points.map(p => Number(p[key])).filter(Number.isFinite);
+    if (!values.length) { target.innerHTML = '<p>Dados ainda não disponíveis.</p>'; return; }
+    const max = Math.max(...values);
+    target.innerHTML = points.map(point => {
+      const value = Number(point[key]);
+      if (!Number.isFinite(value)) return '';
+      const width = max > 0 ? Math.max(4, value / max * 100) : 4;
+      return `<button class="chart-row" type="button" data-point-id="${point.id}" aria-label="Selecionar ${point.nome}">
+        <span class="chart-label">${point.nome.replace('Ponto ', '')}</span>
+        <span class="chart-track"><span class="chart-bar" style="width:${width}%"></span></span>
+        <span class="chart-value">${value.toLocaleString('pt-BR', {minimumFractionDigits: decimals, maximumFractionDigits: decimals})}${suffix}</span>
+      </button>`;
+    }).join('');
+    target.querySelectorAll('[data-point-id]').forEach(button => button.addEventListener('click', () => {
+      select.value = button.dataset.pointId;
+      const point = points.find(p => p.id === button.dataset.pointId);
+      showDetails(point);
+      if (point && markers[point.id]) map?.flyTo(markers[point.id].getLatLng(), 16);
+    }));
+  }
+
+  try {
+    const response = await fetch('data.json');
+    if (!response.ok) throw new Error('Não foi possível carregar data.json');
+    const data = await response.json();
+    points = Array.isArray(data.pontos_coleta) ? data.pontos_coleta : [];
+    if (!points.length) throw new Error('Nenhum ponto de coleta encontrado no data.json');
+
+    select.innerHTML = points.map(p => `<option value="${p.id}">${p.nome}</option>`).join('');
+    if (window.L) {
+      map = L.map(mapElement, {scrollWheelZoom: false}).setView([points[0].latitude, points[0].longitude], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
+      }).addTo(map);
+      points.forEach(point => {
+        if (!Number.isFinite(Number(point.latitude)) || !Number.isFinite(Number(point.longitude))) return;
+        const marker = L.marker([point.latitude, point.longitude]).addTo(map);
+        marker.bindPopup(`<strong>${point.nome}</strong><br>pH: ${Number(point.ph).toLocaleString('pt-BR', {minimumFractionDigits: 2})}<br>Condutividade: ${Number(point.condutividade_us_cm).toLocaleString('pt-BR', {minimumFractionDigits: 1})} µS/cm`);
+        marker.on('click', () => showDetails(point));
+        markers[point.id] = marker;
+      });
+      const validPoints = points.filter(p => Number.isFinite(Number(p.latitude)) && Number.isFinite(Number(p.longitude)));
+      if (validPoints.length > 1) map.fitBounds(L.latLngBounds(validPoints.map(p => [p.latitude, p.longitude])).pad(0.18));
+      setTimeout(() => map.invalidateSize(), 150);
+    } else {
+      mapElement.innerHTML = '<div class="map-fallback">Não foi possível carregar o mapa. Verifique sua conexão com a internet.</div>';
+    }
+    select.addEventListener('change', () => {
+      const point = points.find(p => p.id === select.value);
+      if (!point) { showDetails(null); return; }
+      showDetails(point);
+      if (markers[point.id]) map.flyTo(markers[point.id].getLatLng(), 16);
+    });
+    renderChart(phChart, 'ph', '', 2);
+    renderChart(conductivityChart, 'condutividade_us_cm', '', 1);
+
+    // Exibe o primeiro ponto automaticamente ao carregar a página.
+    if (points.length) {
+      select.value = points[0].id;
+      showDetails(points[0]);
+      if (markers[points[0].id]) {
+        map?.setView(markers[points[0].id].getLatLng(), 14);
+      }
+    }
+  } catch (error) {
+    console.error('Erro ao carregar os resultados dos pontos:', error);
+    mapElement.innerHTML = '<div class="map-fallback">Não foi possível carregar o mapa e os pontos. Abra o site pelo Live Server e confira o arquivo data.json.</div>';
+    details.innerHTML = '<p>Não foi possível carregar os resultados. Confira o arquivo data.json.</p>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initSamplingResults);

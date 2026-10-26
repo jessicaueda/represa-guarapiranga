@@ -32,7 +32,7 @@
     <div class="container nav">
 
       <a class="brand" href="#represa" aria-label="Guarapiranga — início">
-        <img src="./images/logo_guarapiranga.png" alt="" class="brand-icon" aria-hidden="true">
+        <img src="images/logo_guarapiranga.png" alt="" class="brand-icon" aria-hidden="true">
 
         <span class="brand-text">
           <span class="brand-name">
@@ -477,15 +477,15 @@
     <section class="section section-dark results" id="resultados">
       <div class="container">
         <section class="sampling-results sampling-results--standalone" aria-labelledby="sampling-title">
-          <div class="sampling-heading">
-            <div>
-              <div class="eyebrow">PONTOS DE COLETA</div>
-              <h2 id="sampling-title">Resultados <em>por localização.</em></h2>
-              <p>Selecione um ponto no mapa ou na lista para consultar os dados registrados.</p>
+          <div class="results-header sampling-heading">
+            <div class="results-title-block">
+              <div class="eyebrow">RESULTADOS</div>
+              <h2 id="sampling-title">O que a água tem<br>a nos <em>dizer?</em></h2>
             </div>
+            <p class="results-intro">Acompanhe os indicadores que ajudam a compreender a qualidade da água da Represa de Guarapiranga.</p>
           </div>
+          <p class="sampling-instruction">Selecione um marcador no mapa ou um ponto no menu para consultar os dados registrados.</p>
           <div class="sampling-layout sampling-layout--three">
-            <nav class="sampling-point-list" id="samplingPointList" aria-label="Lista de pontos de coleta"></nav>
             <div id="samplingMap" class="sampling-map" role="application" aria-label="Mapa interativo dos pontos de coleta"></div>
             <aside class="sampling-side">
               <label for="samplingPointSelect">Ponto de coleta</label>
@@ -514,45 +514,6 @@
             </article>
           </div>
           <p class="sampling-note">Os gráficos mostram os valores registrados nos pontos de coleta. A temperatura ainda aguarda medição. A visualização não representa, por si só, uma classificação da qualidade ou potabilidade da água.</p>
-        </section>
-
-        <section class="sampling-results" aria-labelledby="sampling-title">
-          <div class="sampling-heading">
-            <div>
-              <div class="eyebrow">PONTOS DE COLETA</div>
-              <h3 id="sampling-title">Resultados <em>por localização.</em></h3>
-              <p>Selecione um marcador no mapa ou um ponto na lista para consultar os dados registrados.</p>
-            </div>
-          </div>
-          <div class="sampling-layout">
-            <div id="samplingMap" class="sampling-map" role="application" aria-label="Mapa interativo dos pontos de coleta"></div>
-            <div class="sampling-side">
-              <label for="samplingPointSelect">Ponto de coleta</label>
-              <select id="samplingPointSelect" class="sampling-select">
-                <option value="">Selecione um ponto</option>
-              </select>
-              <div id="samplingPointDetails" class="sampling-point-details" aria-live="polite">
-                <p>Selecione um ponto para visualizar os resultados.</p>
-              </div>
-            </div>
-          </div>
-          <div class="comparison-grid">
-            <article class="comparison-card">
-              <div class="comparison-card-heading">
-                <h4>pH por ponto</h4>
-                <span>sem unidade</span>
-              </div>
-              <div id="phChart" class="simple-chart" aria-label="Gráfico de pH por ponto"></div>
-            </article>
-            <article class="comparison-card">
-              <div class="comparison-card-heading">
-                <h4>Condutividade elétrica</h4>
-                <span>µS/cm</span>
-              </div>
-              <div id="conductivityChart" class="simple-chart" aria-label="Gráfico de condutividade elétrica por ponto"></div>
-            </article>
-          </div>
-          <p class="sampling-note">Os gráficos mostram os valores registrados na planilha. A temperatura ainda aguarda medição. A visualização não representa, por si só, uma classificação da qualidade ou potabilidade da água.</p>
         </section>
 
         <div class="transparency-box">
