@@ -3555,10 +3555,7 @@ html {
   grid-template-columns: minmax(0, 1.35fr) minmax(270px, .95fr) !important;
   gap: 22px;
 }
-.results .sampling-point-list,
-.results .sampling-point-list + * {
-  /* A lista antiga é removida; não esconder elementos seguintes do layout. */
-}
+
 .results .sampling-point-list {
   display: none !important;
 }
