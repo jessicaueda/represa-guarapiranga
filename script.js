@@ -294,16 +294,17 @@ async function initSamplingResults() {
       return;
     }
     details.innerHTML = `
-      <div class="point-detail-heading"><span class="point-label">PONTO DE AMOSTRAGEM</span><h4>${point.nome}</h4></div>
+      <div class="point-detail-heading"><h4>${point.nome}</h4></div>
       <dl class="point-data-list">
         <div><dt>pH</dt><dd>${Number(point.ph).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</dd></div>
         <div><dt>Condutividade elétrica</dt><dd>${Number(point.condutividade_us_cm).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})} <small>µS/cm</small></dd></div>
-        <div><dt>Temperatura</dt><dd>${point.temperatura_c == null ? 'Aguardando medição' : `${point.temperatura_c} °C`}</dd></div>
         <div><dt>Cor da água</dt><dd>${point.cor || 'Não registrado'}</dd></div>
         <div><dt>Odor</dt><dd>${point.odor || 'Não registrado'}</dd></div>
         <div><dt>Resíduos observados</dt><dd>${point.residuos || 'Não registrado'}</dd></div>
       </dl>
-      <p class="point-coordinates"><strong>Coordenadas:</strong> ${point.coordenadas || `${point.latitude}, ${point.longitude}`}</p>
+      <div class="point-meta-row">
+        <p class="point-coordinates"><strong>Coordenadas:</strong> ${point.coordenadas || `${point.latitude}, ${point.longitude}`} <span class="point-meta-separator" aria-hidden="true"> · </span> <strong>Horário da coleta:</strong> ${point.horario_coleta || 'Não registrado'}</p>
+      </div>
       <a class="point-map-link" href="https://www.google.com/maps?q=${point.latitude},${point.longitude}" target="_blank" rel="noopener noreferrer">Abrir localização no Google Maps ↗</a>`;
     select.value = point.id;
     Object.entries(markers).forEach(([id, marker]) => {
@@ -341,17 +342,57 @@ async function initSamplingResults() {
     points = Array.isArray(data.pontos_coleta) ? data.pontos_coleta : [];
     if (!points.length) throw new Error('Nenhum ponto de coleta encontrado no data.json');
 
-    select.innerHTML = points.map(p => `<option value="${p.id}">${p.nome}</option>`).join('');
+    // Símbolos coloridos no menu para corresponder aos marcadores do mapa.
+    const pointColorDots = ['🔵', '🟢', '🟠', '🟣', '🔴', '🟦', '🩷', '🟢'];
+    select.innerHTML = points.map((p, index) =>
+      `<option value="${p.id}">${pointColorDots[index % pointColorDots.length]} ${p.nome}</option>`
+    ).join('');
     if (window.L) {
       map = L.map(mapElement, {scrollWheelZoom: false}).setView([points[0].latitude, points[0].longitude], 15);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
       }).addTo(map);
-      points.forEach(point => {
+      // Marcadores coloridos: cada ponto recebe uma cor distinta, na ordem do data.json.
+      const markerColors = [
+        '#2784D8', // azul
+        '#299764', // verde
+        '#E99A32', // laranja
+        '#8957C8', // roxo
+        '#D94B4B', // vermelho
+        '#159DA6', // turquesa
+        '#C65D9E', // rosa
+        '#6B7D32'  // verde-oliva
+      ];
+
+      // Remove o fundo padrão do DivIcon do Leaflet para deixar só o pin SVG.
+      if (!document.getElementById('colored-point-marker-style')) {
+        const markerStyle = document.createElement('style');
+        markerStyle.id = 'colored-point-marker-style';
+        markerStyle.textContent = `
+          .leaflet-div-icon.point-marker-icon {
+            background: transparent;
+            border: none;
+          }
+        `;
+        document.head.appendChild(markerStyle);
+      }
+
+      points.forEach((point, index) => {
         if (!Number.isFinite(Number(point.latitude)) || !Number.isFinite(Number(point.longitude))) return;
-        const marker = L.marker([point.latitude, point.longitude]).addTo(map);
-        marker.bindPopup(`<strong>${point.nome}</strong><br>pH: ${Number(point.ph).toLocaleString('pt-BR', {minimumFractionDigits: 2})}<br>Condutividade: ${Number(point.condutividade_us_cm).toLocaleString('pt-BR', {minimumFractionDigits: 1})} µS/cm`);
+        const color = markerColors[index % markerColors.length];
+        const pinIcon = L.divIcon({
+          className: 'point-marker-icon',
+          iconSize: [30, 42],
+          iconAnchor: [15, 42],
+          popupAnchor: [0, -38],
+          html: `<svg width="30" height="42" viewBox="0 0 30 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M15 1.5C7.54 1.5 1.5 7.54 1.5 15c0 10.1 13.5 25.2 13.5 25.2S28.5 25.1 28.5 15C28.5 7.54 22.46 1.5 15 1.5Z" fill="${color}" stroke="#ffffff" stroke-width="1.8"/>
+            <circle cx="15" cy="14.5" r="5.1" fill="#ffffff" fill-opacity="0.96"/>
+          </svg>`
+        });
+        const marker = L.marker([point.latitude, point.longitude], { icon: pinIcon }).addTo(map);
+        marker.bindPopup(`<strong>${point.nome}</strong><br>Coleta: ${point.horario_coleta || 'Horário não registrado'}<br>pH: ${Number(point.ph).toLocaleString('pt-BR', {minimumFractionDigits: 2})}<br>Condutividade: ${Number(point.condutividade_us_cm).toLocaleString('pt-BR', {minimumFractionDigits: 1})} µS/cm`);
         marker.on('click', () => showDetails(point));
         markers[point.id] = marker;
       });
