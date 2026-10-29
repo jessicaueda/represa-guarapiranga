@@ -4881,16 +4881,16 @@ html {
 
 /* Fotos de referência: análise de água; vegetação ripária; caiaque na Guarapiranga; paisagem do reservatório. */
 .preserve-card--saude {
-  background-image: url("images/saude_publica.jpg");
+  background-image: url("./images/saude_publica.jpg");
 }
 .preserve-card--biodiversidade {
-  background-image: url("images/biodiversidade.jpg");
+  background-image: url("./images/biodiversidade.jpg");
 }
 .preserve-card--lazer {
-  background-image: url("images/lazer.jpg");
+  background-image: url("./images/lazer.jpg");
 }
 .preserve-card--gestao {
-  background-image: url("images/gestao_ambiental.jpg");
+  background-image: url("./images/gestao_ambiental.jpg");
 }
 
 .preserve-card-number {
