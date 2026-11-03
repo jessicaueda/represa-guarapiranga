@@ -288,6 +288,15 @@ async function initSamplingResults() {
   let markers = {};
   let points = [];
 
+  // Barra proporcional dentro de uma escala fixa (min–max).
+  function scaleBar(value, min, max, minLabel, maxLabel) {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return '';
+    const pct = Math.min(100, Math.max(2, (n - min) / (max - min) * 100));
+    return `<span class="metric-bar" aria-hidden="true"><span class="metric-bar-fill" style="width:${pct}%"></span></span>
+        <span class="metric-scale" aria-hidden="true"><span>${minLabel}</span><span>${maxLabel}</span></span>`;
+  }
+
   function showDetails(point) {
     if (!point) {
       details.innerHTML = '<p>Selecione um ponto para visualizar os resultados.</p>';
@@ -296,8 +305,8 @@ async function initSamplingResults() {
     details.innerHTML = `
       <div class="point-detail-heading"><h4>${point.nome}</h4></div>
       <dl class="point-data-list">
-        <div><dt>pH</dt><dd>${Number(point.ph).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</dd></div>
-        <div><dt>Condutividade elétrica</dt><dd>${Number(point.condutividade_us_cm).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})} <small>µS/cm</small></dd></div>
+        <div><dt>pH</dt><dd>${Number(point.ph).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</dd>${scaleBar(point.ph, 0, 14, '0', '14')}</div>
+        <div><dt>Condutividade elétrica</dt><dd>${Number(point.condutividade_us_cm).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})} <small>µS/cm</small></dd>${scaleBar(point.condutividade_us_cm, 0, 500, '0', '500')}</div>
         <div><dt>Cor da água</dt><dd>${point.cor || 'Não registrado'}</dd></div>
         <div><dt>Odor</dt><dd>${point.odor || 'Não registrado'}</dd></div>
         <div><dt>Resíduos observados</dt><dd>${point.residuos || 'Não registrado'}</dd></div>
