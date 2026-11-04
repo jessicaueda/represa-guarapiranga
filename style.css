@@ -5448,3 +5448,237 @@ html {
   font-size: 12px;
   opacity: .7;
 }
+
+
+/* ==========================================================================
+   Cards "Conhecer para preservar" — espaçamento fixo + transição suave
+   Título e texto ficam no fluxo normal, ancorados na base do card, então o
+   espaço entre eles é sempre o mesmo. O texto já ocupa seu lugar (invisível)
+   e a dica fica sobreposta a ele; no hover só acontece um crossfade, sem o
+   título ou o layout se mexerem.
+   ========================================================================== */
+.preserve-card {
+  justify-content: flex-end;
+  --ease-soft: cubic-bezier(.22, .61, .36, 1);
+  --p-lines: 6.6;              /* linhas reservadas p/ o texto (igual ao min-height do p) */
+  --reveal: calc(var(--p-lines) * 13px - 18px);  /* quanto o título desce em repouso (já descontando a altura da dica) */
+}
+
+.preserve-card h4,
+.preserve-card-hint,
+.preserve-card p {
+  position: relative;
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
+}
+
+.preserve-card h4,
+.preserve-card:hover h4,
+.preserve-card:focus-within h4 {
+  inset: auto;                 /* anula o top: 62% / 76% das regras antigas */
+  margin: 0;
+  opacity: 1;
+  transition: transform .6s var(--ease-soft);
+}
+
+.preserve-card h4 {
+  transform: translateY(var(--reveal));   /* repouso: título baixo */
+}
+
+.preserve-card:hover h4,
+.preserve-card:focus-within h4 {
+  transform: translateY(0);               /* hover: sobe suavemente */
+}
+
+/* texto: ocupa o espaço desde o início, só fica transparente */
+.preserve-card p {
+  margin: 10px 0 0;            /* <<< espaço fixo entre título e texto */
+  min-height: 6.6em;           /* reserva 4 linhas: alinha os títulos de todos os cards em repouso */
+  max-height: none;
+  overflow: visible;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .6s var(--ease-soft), transform .6s var(--ease-soft);
+  will-change: opacity, transform;
+}
+
+/* dica: altura 0, desenhada por cima da área do texto */
+.preserve-card-hint {
+  display: flex;
+  width: 100%;
+  height: 0;
+  max-height: none;
+  margin: 0;
+  overflow: visible;
+  top: 10px;
+  opacity: 1;
+  transform: translateY(var(--reveal));
+  transition: opacity .35s var(--ease-soft), transform .6s var(--ease-soft);
+  pointer-events: none;
+}
+
+.preserve-card:hover p,
+.preserve-card:focus-within p {
+  max-height: none;
+  margin-top: 10px;
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: .08s;
+}
+
+.preserve-card:hover .preserve-card-hint,
+.preserve-card:focus-within .preserve-card-hint {
+  top: 10px;
+  height: 0;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(0);
+}
+
+/* degradê e sombra do card também mais suaves */
+.preserve-card::before {
+  transition: background .6s var(--ease-soft);
+}
+.preserve-card {
+  transition: transform .5s var(--ease-soft), box-shadow .5s var(--ease-soft);
+}
+
+/* touch / mobile: texto sempre visível, dica escondida */
+@media (hover: none), (max-width: 560px) {
+  .preserve-card h4 { transform: none; transition: none; }
+  .preserve-card p {
+    min-height: 0;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .preserve-card-hint { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preserve-card h4,
+  .preserve-card p,
+  .preserve-card-hint,
+  .preserve-card,
+  .preserve-card::before { transition: none; }
+}
+
+
+/* ==========================================================================
+   Bloco ODS 6 no celular: imagem acima do texto (evita sobreposição)
+   ========================================================================== */
+@media (max-width: 560px) {
+  .preserve-ods {
+    grid-template-columns: minmax(0, 1fr);   /* uma coluna só */
+    gap: 18px;
+    align-items: start;
+  }
+
+  .ods-banner__image {
+    width: 120px;                            /* tamanho do selo no celular */
+  }
+
+  .preserve-ods-copy {
+    min-width: 0;
+  }
+}
+
+
+/* ==========================================================================
+   RESULTADOS — valores de referência (pH e condutividade)
+   - faixa de referência destacada na barra
+   - status "dentro / fora da referência"
+   - explicação quando o valor está fora da faixa
+   ========================================================================== */
+.results .metric-gauge {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 8px;
+}
+
+/* "janela" verde sobre a barra mostrando a faixa de referência */
+.results .metric-band {
+  position: absolute;
+  top: -3px;
+  height: 14px;
+  box-sizing: border-box;
+  border: 1.5px solid #8eeab5;
+  border-radius: 5px;
+  background: rgba(142, 234, 181, .2);
+  pointer-events: none;
+}
+
+.results .metric-gauge + .metric-scale {
+  margin-top: 0;
+}
+
+/* cards de pH e condutividade: conteúdo empilhado no topo (sem espalhar) */
+.results .sampling-side .point-data-list > div.metric-card {
+  justify-content: flex-start;
+}
+
+.results .metric-reference {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.results .metric-ref-line {
+  opacity: .88;
+}
+
+.results .metric-ref-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 8px;
+  margin-right: 6px;
+  vertical-align: middle;
+  box-sizing: border-box;
+  border: 1.5px solid #8eeab5;
+  border-radius: 3px;
+  background: rgba(142, 234, 181, .2);
+}
+
+.results .metric-ref-source {
+  opacity: .8;
+  white-space: nowrap;
+}
+
+.results .metric-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 11px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.results .metric-status.is-ok {
+  color: #c9f7de;
+  background: rgba(142, 234, 181, .18);
+  border-color: rgba(142, 234, 181, .5);
+}
+
+.results .metric-status.is-out {
+  color: #ffe3a3;
+  background: rgba(255, 208, 110, .16);
+  border-color: rgba(255, 208, 110, .55);
+}
+
+.results .metric-meaning {
+  display: block;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, .2);
+  opacity: .94;
+}

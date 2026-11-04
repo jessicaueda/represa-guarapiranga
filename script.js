@@ -288,12 +288,70 @@ async function initSamplingResults() {
   let markers = {};
   let points = [];
 
-  // Barra proporcional dentro de uma escala fixa (min–max).
-  function scaleBar(value, min, max, minLabel, maxLabel) {
+  // ---------------------------------------------------------------------
+  // Valores de referência
+  // pH: 6,0 a 9,0  → Resolução CONAMA nº 357/2005
+  // Condutividade elétrica: < 100 µS/cm → CETESB
+  // Para alterar um limite, mude só os números abaixo.
+  // ---------------------------------------------------------------------
+  const PH_REF = { min: 6, max: 9, text: 'Referência: 6,0 a 9,0', source: 'CONAMA nº 357/2005' };
+  const COND_REF = { max: 100, text: 'Referência: abaixo de 100 µS/cm', source: 'CETESB' };
+
+  function evaluatePh(value) {
+    const v = Number(value);
+    if (!Number.isFinite(v)) return null;
+    if (v < PH_REF.min) {
+      return {
+        state: 'low',
+        label: 'Abaixo da referência',
+        meaning: 'pH ácido (abaixo de 6,0). Pode estar ligado à decomposição intensa de matéria orgânica ou ao lançamento de efluentes ácidos. Em pH baixo, alguns metais ficam mais disponíveis na água e os organismos aquáticos sofrem mais estresse.'
+      };
+    }
+    if (v > PH_REF.max) {
+      return {
+        state: 'high',
+        label: 'Acima da referência',
+        meaning: 'pH alcalino (acima de 9,0). Pode estar associado ao crescimento intenso de algas, que eleva o pH durante a fotossíntese, ou ao lançamento de efluentes alcalinos. Valores muito altos podem causar estresse em peixes e outros organismos aquáticos.'
+      };
+    }
+    return { state: 'ok', label: 'Dentro da referência', meaning: '' };
+  }
+
+  function evaluateConductivity(value) {
+    const v = Number(value);
+    if (!Number.isFinite(v)) return null;
+    if (v >= COND_REF.max) {
+      return {
+        state: 'high',
+        label: 'Acima da referência',
+        meaning: 'Condutividade elevada indica maior quantidade de sais e íons dissolvidos na água. A CETESB associa valores a partir de 100 µS/cm a ambientes impactados, por exemplo por esgoto doméstico ou efluentes. Esse indicador sozinho não identifica a causa.'
+      };
+    }
+    return { state: 'ok', label: 'Dentro da referência', meaning: '' };
+  }
+
+  // Bloco com a referência, o status e, se estiver fora da faixa, o significado.
+  function referenceBlock(result, ref) {
+    if (!result) return '';
+    const isOk = result.state === 'ok';
+    return `<span class="metric-reference">
+        <span class="metric-ref-line"><i class="metric-ref-swatch" aria-hidden="true"></i>${ref.text} <span class="metric-ref-source">(${ref.source})</span></span>
+        <span class="metric-status ${isOk ? 'is-ok' : 'is-out'}"><span aria-hidden="true">${isOk ? '✓' : '!'}</span> ${result.label}</span>
+        ${result.meaning ? `<span class="metric-meaning">${result.meaning}</span>` : ''}
+      </span>`;
+  }
+
+  // Barra proporcional dentro de uma escala fixa (min–max),
+  // com a faixa de referência destacada (band = { from, to }).
+  function scaleBar(value, min, max, minLabel, maxLabel, band) {
     const n = Number(value);
     if (!Number.isFinite(n)) return '';
-    const pct = Math.min(100, Math.max(2, (n - min) / (max - min) * 100));
-    return `<span class="metric-bar" aria-hidden="true"><span class="metric-bar-fill" style="width:${pct}%"></span></span>
+    const toPct = x => Math.min(100, Math.max(0, (x - min) / (max - min) * 100));
+    const pct = Math.min(100, Math.max(2, toPct(n)));
+    const bandHtml = band
+      ? `<span class="metric-band" style="left:${toPct(band.from)}%;width:${toPct(band.to) - toPct(band.from)}%"></span>`
+      : '';
+    return `<span class="metric-gauge" aria-hidden="true"><span class="metric-bar"><span class="metric-bar-fill" style="width:${pct}%"></span></span>${bandHtml}</span>
         <span class="metric-scale" aria-hidden="true"><span>${minLabel}</span><span>${maxLabel}</span></span>`;
   }
 
@@ -305,8 +363,8 @@ async function initSamplingResults() {
     details.innerHTML = `
       <div class="point-detail-heading"><h4>${point.nome}</h4></div>
       <dl class="point-data-list">
-        <div><dt>pH</dt><dd>${Number(point.ph).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</dd>${scaleBar(point.ph, 0, 14, '0', '14')}</div>
-        <div><dt>Condutividade elétrica</dt><dd>${Number(point.condutividade_us_cm).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})} <small>µS/cm</small></dd>${scaleBar(point.condutividade_us_cm, 0, 500, '0', '500')}</div>
+        <div class="metric-card"><dt>pH</dt><dd>${Number(point.ph).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</dd>${scaleBar(point.ph, 0, 14, '0', '14', { from: PH_REF.min, to: PH_REF.max })}${referenceBlock(evaluatePh(point.ph), PH_REF)}</div>
+        <div class="metric-card"><dt>Condutividade elétrica</dt><dd>${Number(point.condutividade_us_cm).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})} <small>µS/cm</small></dd>${scaleBar(point.condutividade_us_cm, 0, 500, '0', '500', { from: 0, to: COND_REF.max })}${referenceBlock(evaluateConductivity(point.condutividade_us_cm), COND_REF)}</div>
         <div><dt>Cor da água</dt><dd>${point.cor || 'Não registrado'}</dd></div>
         <div><dt>Odor</dt><dd>${point.odor || 'Não registrado'}</dd></div>
         <div><dt>Resíduos observados</dt><dd>${point.residuos || 'Não registrado'}</dd></div>
