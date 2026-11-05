@@ -5682,3 +5682,46 @@ html {
   border-top: 1px solid rgba(255, 255, 255, .2);
   opacity: .94;
 }
+
+
+/* ==========================================================================
+   REFERÊNCIAS — lista (ABNT)
+   ========================================================================== */
+.references-list {
+  max-width: 820px;
+  margin: 0;
+  padding: 0 0 24px 22px;      /* espaço à esquerda para as bolinhas */
+  list-style: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                   /* espaço entre uma referência e outra */
+}
+
+.references-list li::marker {
+  color: #1d6f87;
+}
+
+.references-list li {
+  color: #3f5a66;
+  font-size: 13px;
+  line-height: 1.65;
+  text-align: left;
+}
+
+.references-list strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.references-list a {
+  color: #1d6f87;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;     /* links longos quebram em vez de estourar a tela */
+  word-break: break-word;
+}
+
+.references-list a:hover,
+.references-list a:focus-visible {
+  color: var(--ink);
+}
