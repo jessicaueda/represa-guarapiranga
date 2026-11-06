@@ -537,7 +537,7 @@
             <span class="parameter-name">Condutividade</span>
             <span class="parameter-summary">Relacionada aos íons dissolvidos.</span>
             <span class="parameter-detail">Indica a capacidade da água de conduzir corrente elétrica, relacionada à
-              quantidade de íons dissolvidos; variações podem sinalizar mudanças na composição da água.</span>
+              quantidade de íons dissolvidos. Variações podem sinalizar mudanças na composição da água.</span>
           </button>
         </div>
       </div>
@@ -561,8 +561,17 @@
           <p class="sampling-instruction">Selecione um marcador no mapa ou um ponto no menu para consultar os dados
             registrados.</p>
           <div class="sampling-layout sampling-layout--three">
-            <div id="samplingMap" class="sampling-map" role="application"
-              aria-label="Mapa interativo dos pontos de coleta"></div>
+            <div class="sampling-media">
+              <div id="samplingMap" class="sampling-map" role="application"
+                aria-label="Mapa interativo dos pontos de coleta"></div>
+              <figure class="sampling-photo">
+                <div id="samplingPhotoFrame" class="sampling-photo-frame is-empty">
+                  <img id="samplingPhotoImg" alt="" decoding="async">
+                  <span class="sampling-photo-empty">Foto não disponível</span>
+                </div>
+                <figcaption id="samplingPhotoCaption" class="sampling-photo-caption" aria-live="polite"></figcaption>
+              </figure>
+            </div>
             <aside class="sampling-side">
               <label for="samplingPointSelect">Ponto de coleta</label>
               <select id="samplingPointSelect" class="sampling-select">
@@ -590,8 +599,7 @@
               </div>
             </article>
           </div>
-          <p class="sampling-note">Os gráficos mostram os valores registrados nos pontos de coleta. A temperatura ainda
-            aguarda medição. A visualização não representa, por si só, uma classificação da qualidade ou potabilidade da
+          <p class="sampling-note">Os gráficos mostram os valores registrados nos pontos de coleta. A visualização não representa, por si só, uma classificação da qualidade ou potabilidade da
             água.</p>
         </section>
 
@@ -599,8 +607,7 @@
           <span>ⓘ</span>
           <p>
             Transparência faz parte da ciência. Os valores de pH e condutividade exibidos correspondem aos registros da
-            coleta; os parâmetros ainda não analisados aparecem como pendentes. Estes dados, isoladamente, não
-            determinam a potabilidade da água.
+            coleta; Estes dados, isoladamente, não determinam a potabilidade da água.
           </p>
         </div>
       </div>
@@ -624,8 +631,7 @@
 
         <div class="project-copy">
           <p>
-            Este projeto integrador, desenvolvido no contexto de
-            Cidades Inteligentes, busca aproximar ciência, tecnologia
+            Este projeto integrador busca aproximar ciência, tecnologia
             e participação comunitária para compreender um desafio
             real: a qualidade da água da Represa de Guarapiranga.
           </p>
@@ -638,8 +644,8 @@
           </p>
 
           <div class="project-tags">
-            <span>Projeto integrador</span>
-            <span>Cidades inteligentes</span>
+            <span>Projeto Integrador</span>
+            <span>Cidades Inteligentes 2.0</span>
           </div>
         </div>
 
@@ -647,14 +653,14 @@
           <div class="eyebrow light">REALIZAÇÃO ACADÊMICA</div>
 
           <h3>Universidade Presbiteriana Mackenzie</h3>
-          <p>Curso de Química</p>
+          <p>Bacharelado em Química - 1º Período</p>
 
           <div class="project-students">
             <span class="students-label">Integrantes</span>
             <p>Guilherme · Isadora · Jessica · Kaique · Lucas · Samuel</p>
           </div>
 
-          <p class="project-year">Projeto Integrador · 2026</p>
+          <p class="project-year">Cidades Inteligentes 2.0 · 2026</p>
         </div>
 
       </div>

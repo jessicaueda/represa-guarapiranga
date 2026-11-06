@@ -48,6 +48,7 @@ Ficam na pasta `images/`:
 - `ods6.jpg` → selo do ODS 6
 - `biodiversidade.jpg`, `gestao_ambiental.jpg`, `lazer.jpg`, `saude_publica.jpg`
   → fotos dos cards "Conhecer para preservar"
+- `ponto1.jpeg` a `ponto5.jpeg` → fotos dos pontos de coleta (seção Resultados)
 
 Para trocar uma foto, substitua o arquivo mantendo o mesmo nome.
 
@@ -63,6 +64,7 @@ Edite apenas `data.json`, na lista `pontos_coleta`. Cada ponto tem:
   "coordenadas": "23°41'45.5\"S 46°43'00.8\"W",
   "latitude": -23.6959722,
   "longitude": -46.7168889,
+  "foto": "images/ponto1.jpeg",
   "cor": "Levemente amarelado",
   "odor": "Não",
   "residuos": "Não",
@@ -73,6 +75,8 @@ Edite apenas `data.json`, na lista `pontos_coleta`. Cada ponto tem:
 
 - `latitude` e `longitude` (em número decimal, com ponto) posicionam o marcador no mapa.
 - `coordenadas` é o texto que aparece no card; se faltar, o site mostra latitude e longitude.
+- `foto` é o caminho da foto do ponto, que aparece abaixo do mapa. Se o campo faltar ou o
+  arquivo não existir, o site mostra "Foto não disponível".
 - `ph` e `condutividade_us_cm` são números, com ponto como separador decimal.
 - Para incluir um novo ponto, copie um bloco inteiro, troque `id` e `nome` e atualize os valores.
 - O campo `observacao` (no final do arquivo) guarda a nota sobre os dados.

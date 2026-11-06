@@ -93,8 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const activeDesktopLink = desktopNav
       ? [...desktopNav.querySelectorAll("a")].find(
-          link => link.getAttribute("href") === `#${section.id}`
-        )
+        link => link.getAttribute("href") === `#${section.id}`
+      )
       : null;
 
     moveIndicator(activeDesktopLink);
@@ -284,9 +284,14 @@ async function initSamplingResults() {
   const conductivityChart = document.getElementById('conductivityChart');
   if (!mapElement || !select || !details) return;
 
+  const photoFrame = document.getElementById('samplingPhotoFrame');
+  const photoImg = document.getElementById('samplingPhotoImg');
+  const photoCaption = document.getElementById('samplingPhotoCaption');
+
   let map;
   let markers = {};
   let points = [];
+  let photoToken = 0;
 
   // ---------------------------------------------------------------------
   // Valores de referência
@@ -324,7 +329,7 @@ async function initSamplingResults() {
       return {
         state: 'high',
         label: 'Acima da referência',
-        meaning: 'Condutividade elevada indica maior quantidade de sais e íons dissolvidos na água. A CETESB associa valores a partir de 100 µS/cm a ambientes impactados, por exemplo por esgoto doméstico ou efluentes. Esse indicador sozinho não identifica a causa.'
+        meaning: 'Condutividade elevada indica maior quantidade de sais e íons dissolvidos na água. A CETESB associa valores a partir de 100 µS/cm a ambientes impactados, por exemplo, por esgoto doméstico ou efluentes. Esse indicador sozinho não identifica a causa.'
       };
     }
     return { state: 'ok', label: 'Dentro da referência', meaning: '' };
@@ -355,7 +360,61 @@ async function initSamplingResults() {
         <span class="metric-scale" aria-hidden="true"><span>${minLabel}</span><span>${maxLabel}</span></span>`;
   }
 
+  // Foto do ponto (campo "foto" no data.json). Troca com fade suave.
+  function showPhoto(point) {
+    if (!photoFrame || !photoImg) return;
+    const token = ++photoToken;
+
+    if (!point) {
+      photoFrame.classList.add('is-empty');
+      if (photoCaption) photoCaption.textContent = '';
+      return;
+    }
+
+    if (photoCaption) {
+      photoCaption.textContent = [
+        point.nome,
+        point.horario_coleta ? `coleta às ${point.horario_coleta}` : ''
+      ].filter(Boolean).join(' · ');
+    }
+
+    if (!point.foto) {
+      photoFrame.classList.add('is-empty');
+      return;
+    }
+
+    // Mesma foto que já está na tela: nada a fazer.
+    if (photoImg.getAttribute('src') === point.foto && !photoFrame.classList.contains('is-empty')) {
+      photoFrame.classList.remove('is-loading');
+      return;
+    }
+
+    photoFrame.classList.remove('is-empty');
+    photoFrame.classList.add('is-loading'); // foto atual some com fade
+
+    const loaded = new Promise(resolve => {
+      const loader = new Image();
+      loader.onload = () => resolve(true);
+      loader.onerror = () => resolve(false);
+      loader.src = point.foto;
+    });
+    const fadeOut = new Promise(resolve => setTimeout(resolve, 250));
+
+    Promise.all([loaded, fadeOut]).then(([ok]) => {
+      if (token !== photoToken) return; // o usuário já escolheu outro ponto
+      if (!ok) {
+        photoFrame.classList.remove('is-loading');
+        photoFrame.classList.add('is-empty');
+        return;
+      }
+      photoImg.src = point.foto;
+      photoImg.alt = `Foto do local de coleta do ${point.nome}, na Represa de Guarapiranga`;
+      requestAnimationFrame(() => photoFrame.classList.remove('is-loading')); // nova foto aparece com fade
+    });
+  }
+
   function showDetails(point) {
+    showPhoto(point);
     if (!point) {
       details.innerHTML = '<p>Selecione um ponto para visualizar os resultados.</p>';
       return;
@@ -363,8 +422,8 @@ async function initSamplingResults() {
     details.innerHTML = `
       <div class="point-detail-heading"><h4>${point.nome}</h4></div>
       <dl class="point-data-list">
-        <div class="metric-card"><dt>pH</dt><dd>${Number(point.ph).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</dd>${scaleBar(point.ph, 0, 14, '0', '14', { from: PH_REF.min, to: PH_REF.max })}${referenceBlock(evaluatePh(point.ph), PH_REF)}</div>
-        <div class="metric-card"><dt>Condutividade elétrica</dt><dd>${Number(point.condutividade_us_cm).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})} <small>µS/cm</small></dd>${scaleBar(point.condutividade_us_cm, 0, 500, '0', '500', { from: 0, to: COND_REF.max })}${referenceBlock(evaluateConductivity(point.condutividade_us_cm), COND_REF)}</div>
+        <div class="metric-card"><dt>pH</dt><dd>${Number(point.ph).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</dd>${scaleBar(point.ph, 0, 14, '0', '14', { from: PH_REF.min, to: PH_REF.max })}${referenceBlock(evaluatePh(point.ph), PH_REF)}</div>
+        <div class="metric-card"><dt>Condutividade elétrica</dt><dd>${Number(point.condutividade_us_cm).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} <small>µS/cm</small></dd>${scaleBar(point.condutividade_us_cm, 0, 500, '0', '500', { from: 0, to: COND_REF.max })}${referenceBlock(evaluateConductivity(point.condutividade_us_cm), COND_REF)}</div>
         <div><dt>Cor da água</dt><dd>${point.cor || 'Não registrado'}</dd></div>
         <div><dt>Odor</dt><dd>${point.odor || 'Não registrado'}</dd></div>
         <div><dt>Resíduos observados</dt><dd>${point.residuos || 'Não registrado'}</dd></div>
@@ -391,7 +450,7 @@ async function initSamplingResults() {
       return `<button class="chart-row" type="button" data-point-id="${point.id}" aria-label="Selecionar ${point.nome}">
         <span class="chart-label">${point.nome.replace('Ponto ', '')}</span>
         <span class="chart-track"><span class="chart-bar" style="width:${width}%"></span></span>
-        <span class="chart-value">${value.toLocaleString('pt-BR', {minimumFractionDigits: decimals, maximumFractionDigits: decimals})}${suffix}</span>
+        <span class="chart-value">${value.toLocaleString('pt-BR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}${suffix}</span>
       </button>`;
     }).join('');
     target.querySelectorAll('[data-point-id]').forEach(button => button.addEventListener('click', () => {
@@ -415,7 +474,7 @@ async function initSamplingResults() {
       `<option value="${p.id}">${pointColorDots[index % pointColorDots.length]} ${p.nome}</option>`
     ).join('');
     if (window.L) {
-      map = L.map(mapElement, {scrollWheelZoom: false}).setView([points[0].latitude, points[0].longitude], 15);
+      map = L.map(mapElement, { scrollWheelZoom: false }).setView([points[0].latitude, points[0].longitude], 15);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
@@ -459,7 +518,7 @@ async function initSamplingResults() {
           </svg>`
         });
         const marker = L.marker([point.latitude, point.longitude], { icon: pinIcon }).addTo(map);
-        marker.bindPopup(`<strong>${point.nome}</strong><br>Coleta: ${point.horario_coleta || 'Horário não registrado'}<br>pH: ${Number(point.ph).toLocaleString('pt-BR', {minimumFractionDigits: 2})}<br>Condutividade: ${Number(point.condutividade_us_cm).toLocaleString('pt-BR', {minimumFractionDigits: 1})} µS/cm`);
+        marker.bindPopup(`<strong>${point.nome}</strong><br>Coleta: ${point.horario_coleta || 'Horário não registrado'}<br>pH: ${Number(point.ph).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}<br>Condutividade: ${Number(point.condutividade_us_cm).toLocaleString('pt-BR', { minimumFractionDigits: 1 })} µS/cm`);
         marker.on('click', () => showDetails(point));
         markers[point.id] = marker;
       });
@@ -483,7 +542,7 @@ async function initSamplingResults() {
       select.value = points[0].id;
       showDetails(points[0]);
       if (markers[points[0].id]) {
-        map?.setView(markers[points[0].id].getLatLng(), 14);
+        map?.setView(markers[points[0].id].getLatLng(), 16);
       }
     }
   } catch (error) {
